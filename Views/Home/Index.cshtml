@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "VISA FX Calculator";
+}
+
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <img src="~/images/visa.svg" alt="Visa Logo" class="mb-3" />
+        <h1>VISA FX Calculator</h1>
+        <p>Calculate foreign exchange rates for your Visa transactions. Enter the amount in USD and select your target currency to see the converted amount.</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form id="fxCalculatorForm">
+                <div class="mb-3">
+                    <label for="usdAmount" class="form-label">USD Amount</label>
+                    <input type="number" class="form-control" id="usdAmount" placeholder="Enter amount in USD" step="0.01" min="0" required />
+                </div>
+
+                <div class="mb-3">
+                    <label for="currency" class="form-label">Target Currency</label>
+                    <select class="form-select" id="currency" required>
+                        <option value="">Select currency...</option>
+                        <option value="GHS">GHS - Ghanaian Cedi</option>
+                        <option value="EUR">EUR - Euro</option>
+                        <option value="GBP">GBP - British Pound</option>
+                    </select>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Calculate</button>
+                </div>
+            </form>
+
+            <div id="result" class="mt-4 alert alert-info" style="display: none;">
+                <h5>Result:</h5>
+                <p id="resultText"></p>
+            </div>
+        </div>
+    </div>
+</div>
