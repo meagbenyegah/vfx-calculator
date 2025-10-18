@@ -1,6 +1,6 @@
 # VFX Calculator
 
-A modern VFX (Visual Effects) Calculator application built with ASP.NET Core backend and React frontend.
+A modern Exchange Rate Calculator application built with ASP.NET Core backend and React frontend. This application provides real-time currency conversion calculations with a professional, user-friendly interface.
 
 ## 🏗️ Architecture
 
@@ -22,8 +22,13 @@ This project uses a hybrid architecture with:
 - **TanStack Router** - Type-safe file-based routing
 - **TanStack Query** - Server state management with caching
 - **Tailwind CSS v4** - Utility-first CSS framework
+- **shadcn/ui** - Beautiful, accessible UI components
+- **React Hook Form** - Performant forms with easy validation
+- **Zod** - TypeScript-first schema validation
 - **TypeScript** - Type safety and better developer experience
 - **Bun** - Fast package manager and runtime
+- **Biome** - Fast formatter and linter
+- **Husky** - Git hooks for code quality
 
 ## 📁 Project Structure
 
@@ -34,11 +39,23 @@ vfx-calculator/
 │   └── ApiController.cs   # API endpoints
 ├── ClientApp/            # React frontend application
 │   ├── src/
-│   │   ├── routes/       # File-based routes (TanStack Router)
+│   │   ├── components/   # Reusable UI components
+│   │   │   ├── ui/       # shadcn/ui components
+│   │   │   ├── CurrencyCombobox.tsx  # Custom currency selector
+│   │   │   └── InfoPopover.tsx       # Help information popover
+│   │   ├── screens/      # Main application screens
+│   │   │   └── Root.tsx  # Exchange Rate Calculator
+│   │   ├── constants/    # Application constants
+│   │   │   └── dummy.ts  # Currency data and defaults
+│   │   ├── util/         # Utility functions
+│   │   │   └── functions.ts  # Exchange rate calculations
 │   │   ├── hooks/        # Custom React hooks
+│   │   ├── assets/       # Static assets (images, fonts)
 │   │   ├── main.tsx      # Application entry point
-│   │   └── index.css     # Global styles with Tailwind
+│   │   └── global.css    # Global styles with Tailwind
+│   ├── .husky/           # Git hooks configuration
 │   ├── vite.config.ts    # Vite configuration
+│   ├── biome.json        # Biome formatter/linter config
 │   ├── package.json      # Frontend dependencies
 │   └── README.md         # Frontend documentation
 ├── wwwroot/              # Static files (React build output)
@@ -200,6 +217,35 @@ bun run dev
 # Both servers will auto-reload on file changes
 ```
 
+## 💱 Exchange Rate Calculator
+
+The application features a comprehensive Exchange Rate Calculator with the following capabilities:
+
+### Features
+- **146+ Currencies**: Support for major, minor, and exotic world currencies
+- **Search Functionality**: Type to search through currencies with featured section
+- **Real-time Validation**: Form validation with helpful error messages
+- **Interactive Help**: Info popovers explaining each field
+- **Currency Swap**: One-click exchange between From/To currencies
+- **Date Management**: Transaction date with 12-month validation
+- **Bank Fee Configuration**: Editable bank fee percentage
+- **Exchange Rate Calculation**: Dummy calculation with realistic rates
+
+### Supported Currencies
+- **Major**: USD, EUR, GBP, JPY, CHF, CAD, AUD, NZD
+- **Asian**: CNY, HKD, SGD, KRW, TWD, THB, MYR, IDR, PHP, VND, INR, PKR, BDT, LKR, NPR
+- **European**: SEK, NOK, DKK, PLN, CZK, HUF, RON, BGN, HRK, RSD, UAH, RUB, BYN, MDL, GEL, AMD, AZN, KZT, KGS, TJS, UZS, TMT
+- **Middle Eastern & African**: AED, SAR, QAR, KWD, BHD, OMR, JOD, LBP, ILS, EGP, MAD, TND, DZD, LYD, ETB, KES, UGX, TZS, ZAR, NGN, GHS, XOF, XAF
+- **American**: MXN, BRL, ARS, CLP, COP, PEN, UYU, VES, BOB, PYG, GTQ, HNL, NIO, CRC, PAB, DOP, JMD, TTD, BBD, XCD
+- **Additional**: ISK, MKD, ALL, BAM, MNT, LAK, KHR, MMK, BND, FJD, PGK, SBD, TOP, VUV, WST, XPF, AWG, BMD, KYD, BZD, GYD, SRD, BWP, SZL, LSL, NAD, MWK, ZMW, BIF, DJF, KMF, RWF, SCR, SOS, AOA, CDF, GMD, GNF, LRD, MRO, SLL, STD
+
+### Usage
+1. **Enter Amount**: Input the transaction amount in the original currency
+2. **Select Currencies**: Choose From and To currencies using the searchable dropdowns
+3. **Set Date & Fee**: Configure transaction date and bank fee percentage
+4. **Calculate**: Get the exchange rate and converted amount
+5. **View Results**: See detailed conversion information with mark-up percentage
+
 ## 🌐 API Endpoints
 
 The backend provides the following API endpoints:
@@ -217,11 +263,24 @@ The backend provides the following API endpoints:
 
 ## 🎨 Frontend Features
 
+### Exchange Rate Calculator
+- **Professional UI**: Clean, modern interface matching financial application standards
+- **Comprehensive Currency Support**: 146+ world currencies with search functionality
+- **Real-time Validation**: Form validation with Zod schema and React Hook Form
+- **Interactive Help**: Info popovers with detailed explanations for each field
+- **Currency Swap**: One-click currency exchange functionality
+- **Date & Fee Management**: Editable transaction date and bank fee with toggle interface
+- **Exchange Rate Calculation**: Dummy calculation engine with realistic rates
+
+### Technical Features
 - **File-based Routing**: Routes automatically generated from `src/routes/` directory
 - **Type Safety**: Full TypeScript support with TanStack Router's type inference
 - **API Integration**: TanStack Query for server state management with caching
 - **Dev Tools**: TanStack Router and React Query devtools for debugging
 - **Modern CSS**: Tailwind CSS v4 with the new Vite plugin
+- **UI Components**: shadcn/ui components for consistent, accessible design
+- **Form Management**: React Hook Form with Zod validation
+- **Code Quality**: Biome formatter/linter with Husky git hooks
 - **Hot Reload**: Fast development with Vite's HMR
 
 ## 🔧 Build Process
@@ -284,6 +343,12 @@ The application is designed for easy deployment:
 
 ## 📝 Development Notes
 
+### Exchange Rate Calculator Features
+- **Currency Data**: Located in `ClientApp/src/constants/dummy.ts`
+- **Calculation Logic**: Implemented in `ClientApp/src/util/functions.ts`
+- **Form Validation**: Zod schema in `ClientApp/src/screens/Root.tsx`
+- **UI Components**: Custom components in `ClientApp/src/components/`
+
 ### Adding New API Endpoints
 1. Add new methods to `Controllers/ApiController.cs`
 2. Create corresponding TanStack Query hooks in `ClientApp/src/hooks/`
@@ -296,8 +361,15 @@ The application is designed for easy deployment:
 
 ### Styling
 - Use Tailwind CSS utility classes
-- Custom styles go in `ClientApp/src/index.css`
+- Custom styles go in `ClientApp/src/global.css`
+- shadcn/ui components for consistent design
 - Component-specific styles can be added inline or as separate CSS modules
+
+### Code Quality
+- **Formatting**: Run `bun run format` to format code with Biome
+- **Linting**: Run `bun run lint` to check for issues
+- **Git Hooks**: Husky automatically formats and lints on commit
+- **Type Checking**: Run `bun run type-check` for TypeScript validation
 
 ## 🤝 Contributing
 
