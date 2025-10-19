@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using System.Threading.Tasks;
 using VfxCalculator.Models;
 using VfxCalculator.Services;
-using System.Threading.Tasks;
 
 namespace VfxCalculator.Controllers
 {
@@ -10,11 +11,13 @@ namespace VfxCalculator.Controllers
     public class VisaController : ControllerBase
     {
         private readonly VisaFXService _visaFXService;
+		private readonly AppConfig _appConfig;
 
-        public VisaController(VisaFXService visaFXService)
+		public VisaController(VisaFXService visaFXService, IOptions<AppConfig> appConfigOptions)
         {
             _visaFXService = visaFXService;
-        }
+			_appConfig = appConfigOptions.Value;
+		}
 
         // GET: api/visa
         [HttpGet]
@@ -25,7 +28,7 @@ namespace VfxCalculator.Controllers
 
         // GET: api/visa/hello-world
         [HttpGet("hello-world")]
-        public async Task<ActionResult<ApiResponse<HelloWorldResponse>>> HelloWorld()
+        public async Task<IActionResult> HelloWorld()
         {
             var result = await _visaFXService.HelloWorld();
             return Ok(result);
@@ -33,7 +36,7 @@ namespace VfxCalculator.Controllers
 
         // POST: api/visa/fx-rate
         [HttpPost("fx-rate")]
-        public async Task<ActionResult<ApiResponse<FxResponseModel>>> GetFxRate([FromBody] FxRequestModel request)
+        public async Task<IActionResult> GetFxRate([FromBody] FxRequestModel request)
         {
             request.AcquirerDetails = new AcquirerDetails
             {
@@ -48,5 +51,18 @@ namespace VfxCalculator.Controllers
             var result = await _visaFXService.GetFxRate(request);
             return Ok(result);
         }
-    }
+
+		// GET: api/visa/currencies
+		[HttpGet("currencies")]
+		public IActionResult GetCurrencies()
+		{
+			var result = new ApiResponse<List<CurrencyModel>>
+			{
+				ResponseCode = "00",
+				ResponseMessage = "Currency list fetched successfully",
+				Result = _appConfig.CurrencyList
+			};
+			return Ok(result);
+		}
+	}
 }

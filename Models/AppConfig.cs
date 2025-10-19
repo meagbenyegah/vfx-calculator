@@ -1,5 +1,14 @@
+using System.Collections.Generic;
+
 namespace VfxCalculator.Models
 {
+    public class CurrencyModel
+    {
+        public string Name { get; set; } = string.Empty;
+        public string Short_Name { get; set; } = string.Empty;
+        public string Code { get; set; } = string.Empty;
+    }
+
     public class VisaExchangeRateApiConfig
     {
         public string BaseUrl { get; set; } = string.Empty;
@@ -15,5 +24,6 @@ namespace VfxCalculator.Models
     public class AppConfig
     {
         public VisaExchangeRateApiConfig VisaExchangeRateApi { get; set; } = new VisaExchangeRateApiConfig();
+        public List<CurrencyModel> CurrencyList { get; set; } = new List<CurrencyModel>();
     }
 }

@@ -8,6 +8,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json;
 using VfxCalculator.Models;
+using Serilog;
 
 namespace VfxCalculator.Services
 {
@@ -101,91 +102,100 @@ namespace VfxCalculator.Services
             return certs;
         }
 
-		public async Task<ApiResponse<HelloWorldResponse>> HelloWorld()
-		{
-			var url = _config.HelloWorldPath;
-			try
-			{
-				var response = await _httpClient.GetAsync(url);
-				var json = await response.Content.ReadAsStringAsync();
+        public async Task<ApiResponse<HelloWorldResponse>> HelloWorld()
+        {
+            var url = _config.HelloWorldPath;
+            Log.Information("Sending GET request to URL: {Url}", url);
+            try
+            {
+                var response = await _httpClient.GetAsync(url);
+                var json = await response.Content.ReadAsStringAsync();
 
-				if (!response.IsSuccessStatusCode)
-				{
-					return new ApiResponse<HelloWorldResponse>
-					{
-						ResponseCode = ((int)response.StatusCode).ToString(),
-						ResponseMessage = $"Error: {response.StatusCode} - {json}",
-						Result = null
-					};
-				}
+                Log.Information("Received response from URL: {Url} | Status: {StatusCode} | Body: {Body}", url, response.StatusCode, json);
 
-				var result = JsonSerializer.Deserialize<HelloWorldResponse>(json, new JsonSerializerOptions
-				{
-					PropertyNameCaseInsensitive = true
-				});
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new ApiResponse<HelloWorldResponse>
+                    {
+                        ResponseCode = ((int)response.StatusCode).ToString(),
+                        ResponseMessage = $"Error: {response.StatusCode} - {json}",
+                        Result = null
+                    };
+                }
 
-				if (result != null)
-				{
-					result.Timestamp = DateTime.UtcNow.ToString("o");
-				}
+                var result = JsonSerializer.Deserialize<HelloWorldResponse>(json, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
 
-				return new ApiResponse<HelloWorldResponse>
-				{
-					ResponseCode = "00",
-					ResponseMessage = "HelloWorld call successful",
-					Result = result
-				};
-			}
-			catch (Exception ex)
-			{
-				return new ApiResponse<HelloWorldResponse>
-				{
-					ResponseCode = "99",
-					ResponseMessage = $"Exception: {ex.Message}",
-					Result = null
-				};
-			}
-		}
+                if (result != null)
+                {
+                    result.Timestamp = DateTime.UtcNow.ToString("o");
+                }
 
-		public async Task<ApiResponse<FxResponseModel>> GetFxRate(FxRequestModel request)
-		{
-			var url = _config.FxPath;
-			try
-			{
-				var response = await _httpClient.PostAsJsonAsync(url, request);
-				var json = await response.Content.ReadAsStringAsync();
+                return new ApiResponse<HelloWorldResponse>
+                {
+                    ResponseCode = "00",
+                    ResponseMessage = "HelloWorld call successful",
+                    Result = result
+                };
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Exception during GET request to URL: {Url}", url);
+                return new ApiResponse<HelloWorldResponse>
+                {
+                    ResponseCode = "99",
+                    ResponseMessage = $"Exception: {ex.Message}",
+                    Result = null
+                };
+            }
+        }
 
-				if (!response.IsSuccessStatusCode)
-				{
-					return new ApiResponse<FxResponseModel>
-					{
-						ResponseCode = ((int)response.StatusCode).ToString(),
-						ResponseMessage = $"Error: {response.StatusCode} - {json}",
-						Result = null
-					};
-				}
+        public async Task<ApiResponse<FxResponseModel>> GetFxRate(FxRequestModel request)
+        {
+            var url = _config.FxPath;
+            var requestBody = JsonSerializer.Serialize(request);
+            Log.Information("Sending POST request to URL: {Url} | Body: {Body}", url, requestBody);
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync(url, request);
+                var json = await response.Content.ReadAsStringAsync();
 
-				var result = JsonSerializer.Deserialize<FxResponseModel>(json, new JsonSerializerOptions
-				{
-					PropertyNameCaseInsensitive = true
-				});
+                Log.Information("Received response from URL: {Url} | Status: {StatusCode} | Body: {Body}", url, response.StatusCode, json);
 
-				return new ApiResponse<FxResponseModel>
-				{
-					ResponseCode = "00",
-					ResponseMessage = "FX Rate call successful",
-					Result = result
-				};
-			}
-			catch (Exception ex)
-			{
-				return new ApiResponse<FxResponseModel>
-				{
-					ResponseCode = "99",
-					ResponseMessage = $"Exception: {ex.Message}",
-					Result = null
-				};
-			}
-		}
-	}
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new ApiResponse<FxResponseModel>
+                    {
+                        ResponseCode = ((int)response.StatusCode).ToString(),
+                        ResponseMessage = $"Error: {response.StatusCode} - {json}",
+                        Result = null
+                    };
+                }
+
+                var result = JsonSerializer.Deserialize<FxResponseModel>(json, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+
+                return new ApiResponse<FxResponseModel>
+                {
+                    ResponseCode = "00",
+                    ResponseMessage = "FX Rate call successful",
+                    Result = result
+                };
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Exception during POST request to URL: {Url} | Body: {Body}", url, requestBody);
+                return new ApiResponse<FxResponseModel>
+                {
+                    ResponseCode = "99",
+                    ResponseMessage = $"Exception: {ex.Message}",
+                    Result = null
+                };
+            }
+        }
+    }
 }
