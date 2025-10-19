@@ -13,14 +13,26 @@
         <div class="col-md-6">
             <form id="fxCalculatorForm">
                 <div class="mb-3">
-                    <label for="usdAmount" class="form-label">USD Amount</label>
-                    <input type="number" class="form-control" id="usdAmount" placeholder="Enter amount in USD" step="0.01" min="0" required />
+                    <label for="amount" class="form-label">Amount</label>
+                    <input type="number" class="form-control" id="amount" placeholder="Enter amount" step="0.01" min="0" required />
                 </div>
 
                 <div class="mb-3">
-                    <label for="currency" class="form-label">Target Currency</label>
-                    <select class="form-select" id="currency" required>
+                    <label for="fromCurrency" class="form-label">From Currency</label>
+                    <select class="form-select" id="fromCurrency" required>
                         <option value="">Select currency...</option>
+                        <option value="USD">USD - US Dollar</option>
+                        <option value="GHS">GHS - Ghanaian Cedi</option>
+                        <option value="EUR">EUR - Euro</option>
+                        <option value="GBP">GBP - British Pound</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="toCurrency" class="form-label">To Currency</label>
+                    <select class="form-select" id="toCurrency" required>
+                        <option value="">Select currency...</option>
+                        <option value="USD">USD - US Dollar</option>
                         <option value="GHS">GHS - Ghanaian Cedi</option>
                         <option value="EUR">EUR - Euro</option>
                         <option value="GBP">GBP - British Pound</option>
