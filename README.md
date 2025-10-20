@@ -1,74 +1,55 @@
 # VFX Calculator
 
-A modern Exchange Rate Calculator application built with ASP.NET Core backend and React frontend. This application provides real-time currency conversion calculations with a professional, user-friendly interface.
+A modern Exchange Rate Calculator application built with ASP.NET Core MVC. This application provides real-time currency conversion calculations with a professional, user-friendly interface using traditional server-side rendering with interactive JavaScript.
 
 ## 🏗️ Architecture
 
-This project uses a hybrid architecture with:
-- **Backend**: ASP.NET Core 8.0 Web API
-- **Frontend**: React 19 SPA with modern tooling
-- **Build System**: Integrated build process for seamless deployment
+This project uses a traditional MVC architecture:
+- **Backend**: ASP.NET Core 8.0 MVC
+- **Frontend**: Server-side rendered Razor views with vanilla JavaScript
+- **Styling**: Custom CSS with responsive design
+- **API**: RESTful endpoints for calculations
 
 ## 🚀 Tech Stack
 
 ### Backend
-- **ASP.NET Core 8.0** - Web API framework
-- **C#** - Primary programming language
-- **Controllers** - RESTful API endpoints
+- **ASP.NET Core 8.0** - MVC framework with Web API
+- **C#** - Primary programming language  
+- **Razor Pages** - Server-side templating
+- **Controllers** - MVC controllers and API endpoints
 
 ### Frontend
-- **React 19** - Latest React with concurrent features
-- **Vite 7** - Fast build tool and dev server
-- **TanStack Router** - Type-safe file-based routing
-- **TanStack Query** - Server state management with caching
-- **Tailwind CSS v4** - Utility-first CSS framework
-- **shadcn/ui** - Beautiful, accessible UI components
-- **React Hook Form** - Performant forms with easy validation
-- **Zod** - TypeScript-first schema validation
-- **TypeScript** - Type safety and better developer experience
-- **Bun** - Fast package manager and runtime
-- **Biome** - Fast formatter and linter
-- **Husky** - Git hooks for code quality
+- **HTML/CSS** - Custom responsive styling
+- **Vanilla JavaScript** - Interactive functionality
+- **Razor Views** - Server-side rendered templates
+- **CSS Grid/Flexbox** - Modern layout techniques
 
 ## 📁 Project Structure
 
 ```
 vfx-calculator/
-├── Controllers/           # ASP.NET Core API controllers
-│   ├── HomeController.cs  # SPA serving controller
-│   └── ApiController.cs   # API endpoints
-├── ClientApp/            # React frontend application
-│   ├── src/
-│   │   ├── components/   # Reusable UI components
-│   │   │   ├── ui/       # shadcn/ui components
-│   │   │   ├── CurrencyCombobox.tsx  # Custom currency selector
-│   │   │   └── InfoPopover.tsx       # Help information popover
-│   │   ├── screens/      # Main application screens
-│   │   │   └── Root.tsx  # Exchange Rate Calculator
-│   │   ├── constants/    # Application constants
-│   │   │   └── dummy.ts  # Currency data and defaults
-│   │   ├── util/         # Utility functions
-│   │   │   └── functions.ts  # Exchange rate calculations
-│   │   ├── hooks/        # Custom React hooks
-│   │   ├── assets/       # Static assets (images, fonts)
-│   │   ├── main.tsx      # Application entry point
-│   │   └── global.css    # Global styles with Tailwind
-│   ├── .husky/           # Git hooks configuration
-│   ├── vite.config.ts    # Vite configuration
-│   ├── biome.json        # Biome formatter/linter config
-│   ├── package.json      # Frontend dependencies
-│   └── README.md         # Frontend documentation
-├── wwwroot/              # Static files (React build output)
-├── Program.cs            # ASP.NET Core startup
-└── VfxCalculator.csproj  # Project file with build integration
+├── Controllers/           # ASP.NET Core MVC controllers
+│   ├── HomeController.cs  # Main page controller
+│   └── ApiController.cs   # API endpoints for calculations
+├── Views/                # Razor view templates
+│   ├── Home/
+│   │   └── Index.cshtml   # Exchange Rate Calculator page
+│   └── Shared/           # Shared layout and partial views
+├── Models/               # Data models and view models
+├── wwwroot/              # Static files (CSS, JS, images)
+│   ├── css/
+│   │   └── site.css      # Application styles
+│   ├── js/
+│   │   └── exchange-calculator.js  # Calculator functionality
+│   └── images/           # Logo and background images
+├── Program.cs            # ASP.NET Core startup configuration
+└── VfxCalculator.csproj  # Project file
 ```
 
 ## 🛠️ Development Setup
 
 ### Prerequisites
 - [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
-- [Bun](https://bun.sh/) (for frontend package management)
-- [Node.js](https://nodejs.org/) (for build integration)
 
 ### Getting Started
 
@@ -78,55 +59,34 @@ vfx-calculator/
    cd vfx-calculator
    ```
 
-2. **Install frontend dependencies**
+2. **Run the application**
    ```bash
-   cd ClientApp
-   bun install
-   cd ..
-   ```
-
-3. **Run the application**
-   ```bash
-   # Option 1: Run both frontend and backend
    dotnet run
-
-   # Option 2: Run frontend in development mode
-   cd ClientApp
-   bun run dev
    ```
+
+3. **Access the application**
+   - Navigate to `https://localhost:5001` or `http://localhost:5000`
+   - The Exchange Rate Calculator will be available immediately
 
 ## 🚀 Running the Application
 
-### Development Mode (Recommended)
-
-#### Option 1: Full Stack Development
+### Development Mode
 ```bash
-# Terminal 1: Start the backend
+# Start the application
 dotnet run
-# Backend will be available at: https://localhost:7xxx or http://localhost:5xxx
-
-# Terminal 2: Start the frontend dev server
-cd ClientApp
-bun run dev
-# Frontend will be available at: http://localhost:5173
+# Application will be available at: https://localhost:5001 or http://localhost:5000
 ```
 
-#### Option 2: Backend Only (Serves Built React App)
+### Development with Hot Reload
 ```bash
-# First, build the React app
-cd ClientApp
-bun run build
-
-# Then run the backend
-cd ..
-dotnet run
-# Full application will be available at: https://localhost:7xxx or http://localhost:5xxx
+# Start with automatic restart on file changes
+dotnet watch run
 ```
 
 ### Production Mode
 ```bash
-# Build the entire application
-dotnet build
+# Build the application
+dotnet build --configuration Release
 
 # Run in production mode
 dotnet run --configuration Release
@@ -134,21 +94,7 @@ dotnet run --configuration Release
 
 ## 🔨 Building the Application
 
-### Frontend Build Commands
-```bash
-cd ClientApp
-
-# Development build (with source maps)
-bun run build
-
-# Preview the production build locally
-bun run preview
-
-# Clean build artifacts
-rm -rf dist/
-```
-
-### Backend Build Commands
+### Build Commands
 ```bash
 # Build the project
 dotnet build
@@ -158,63 +104,21 @@ dotnet build --configuration Release
 
 # Clean build artifacts
 dotnet clean
-```
 
-### Full Application Build
-```bash
-# Build everything (frontend + backend)
-dotnet build
-
-# This will:
-# 1. Install frontend dependencies (if needed)
-# 2. Build the React app to wwwroot/dist/
-# 3. Build the ASP.NET Core application
+# Run tests (when available)
+dotnet test
 ```
 
 ### Development Workflow
-
-#### Frontend Development
 ```bash
-cd ClientApp
-
-# Start development server with hot reload
-bun run dev          # http://localhost:5173
-
-# Build for production
-bun run build        # Outputs to ../wwwroot/dist/
-
-# Preview production build
-bun run preview      # Preview the built app
-
-# Lint code
-bun run lint         # Run ESLint
-```
-
-#### Backend Development
-```bash
-# Start development server
-dotnet run           # https://localhost:7xxx
+# Start development with hot reload
+dotnet watch run     # Auto-restart on file changes
 
 # Build the project
 dotnet build         # Build without running
 
-# Run tests (when available)
-dotnet test          # Run unit tests
-
-# Watch for changes (if using dotnet watch)
-dotnet watch run     # Auto-restart on changes
-```
-
-#### Full Stack Development
-```bash
-# Terminal 1: Backend with hot reload
-dotnet watch run
-
-# Terminal 2: Frontend with hot reload
-cd ClientApp
-bun run dev
-
-# Both servers will auto-reload on file changes
+# Run the application
+dotnet run           # Start the server
 ```
 
 ## 💱 Exchange Rate Calculator
@@ -251,13 +155,32 @@ The application features a comprehensive Exchange Rate Calculator with the follo
 The backend provides the following API endpoints:
 
 - `GET /api/api` - Basic API information
-- `GET /api/api/health` - Health check endpoint
+- `GET /api/api/health` - Health check endpoint  
+- `POST /api/api/calculate-exchange-rate` - Exchange rate calculation
 
-### Example API Response
+### Example API Responses
+
+#### Health Check
 ```json
 {
   "status": "healthy",
-  "timestamp": "2024-01-15T10:30:00Z"
+  "timestamp": "2025-10-20T10:30:00Z"
+}
+```
+
+#### Exchange Rate Calculation
+```json
+{
+  "fromAmount": 100,
+  "fromCurrency": "USD", 
+  "toCurrency": "GHS",
+  "baseRate": 12.50,
+  "finalRate": 12.8125,
+  "markup": 2.5,
+  "convertedAmount": 1281.25,
+  "feeAmount": 25.63,
+  "totalAmount": 1306.88,
+  "bankFee": 2.0
 }
 ```
 
@@ -265,56 +188,42 @@ The backend provides the following API endpoints:
 
 ### Exchange Rate Calculator
 - **Professional UI**: Clean, modern interface matching financial application standards
-- **Comprehensive Currency Support**: 146+ world currencies with search functionality
-- **Real-time Validation**: Form validation with Zod schema and React Hook Form
+- **Comprehensive Currency Support**: 10+ major world currencies with dropdown selection
+- **Real-time Validation**: Client-side form validation with error messaging
 - **Interactive Help**: Info popovers with detailed explanations for each field
 - **Currency Swap**: One-click currency exchange functionality
 - **Date & Fee Management**: Editable transaction date and bank fee with toggle interface
-- **Exchange Rate Calculation**: Dummy calculation engine with realistic rates
+- **Exchange Rate Calculation**: Server-side calculation engine with realistic rates
+- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
 
 ### Technical Features
-- **File-based Routing**: Routes automatically generated from `src/routes/` directory
-- **Type Safety**: Full TypeScript support with TanStack Router's type inference
-- **API Integration**: TanStack Query for server state management with caching
-- **Dev Tools**: TanStack Router and React Query devtools for debugging
-- **Modern CSS**: Tailwind CSS v4 with the new Vite plugin
-- **UI Components**: shadcn/ui components for consistent, accessible design
-- **Form Management**: React Hook Form with Zod validation
-- **Code Quality**: Biome formatter/linter with Husky git hooks
-- **Hot Reload**: Fast development with Vite's HMR
+- **Server-Side Rendering**: Fast initial page loads with Razor views
+- **Progressive Enhancement**: JavaScript adds interactivity to working HTML forms
+- **Modern CSS**: Custom CSS with Grid, Flexbox, and CSS custom properties
+- **Vanilla JavaScript**: No framework dependencies, lightweight and fast
+- **API Integration**: Fetch API for server communication
+- **Form Management**: Native HTML5 validation enhanced with JavaScript
+- **Accessibility**: Semantic HTML with proper ARIA attributes
+- **Performance**: Minimal JavaScript bundle, optimized CSS
 
 ## 🔧 Build Process
 
-The project uses an integrated build process that automatically handles both frontend and backend compilation.
+The project uses a simple .NET build process.
 
 ### Build Flow
-1. **Development**: Frontend runs on Vite dev server (port 5173), backend serves API (port 5xxx/7xxx)
-2. **Production**: Frontend builds to `wwwroot/dist/`, backend serves the SPA
-3. **Deployment**: Single .NET build process handles both frontend and backend
+1. **Development**: Single ASP.NET Core application serves everything
+2. **Production**: Static assets served from wwwroot/
+3. **Deployment**: Standard .NET deployment process
 
 ### Build Commands
 
-#### Quick Build
+#### Build
 ```bash
-# Build everything (frontend + backend)
+# Build the application
 dotnet build
 
 # Build in Release mode
 dotnet build --configuration Release
-```
-
-#### Detailed Build Steps
-```bash
-# 1. Build frontend only
-cd ClientApp
-bun run build
-
-# 2. Build backend only
-cd ..
-dotnet build
-
-# 3. Build everything together
-dotnet build  # This runs both steps automatically
 ```
 
 #### Publishing for Production
@@ -324,14 +233,14 @@ dotnet publish -c Release -o ./publish
 
 # The publish folder will contain:
 # - All ASP.NET Core files
-# - Built React app in wwwroot/dist/
+# - Static assets (CSS, JS, images)
 # - All necessary dependencies
 ```
 
 ### Build Output Locations
-- **Frontend**: `ClientApp/dist/` → `wwwroot/dist/`
-- **Backend**: `bin/Release/net8.0/`
+- **Application**: `bin/Release/net8.0/`
 - **Published**: `./publish/` (when using dotnet publish)
+- **Static Assets**: `wwwroot/` (CSS, JS, images)
 
 ## 🚀 Deployment
 
@@ -344,39 +253,39 @@ The application is designed for easy deployment:
 ## 📝 Development Notes
 
 ### Exchange Rate Calculator Features
-- **Currency Data**: Located in `ClientApp/src/constants/dummy.ts`
-- **Calculation Logic**: Implemented in `ClientApp/src/util/functions.ts`
-- **Form Validation**: Zod schema in `ClientApp/src/screens/Root.tsx`
-- **UI Components**: Custom components in `ClientApp/src/components/`
+- **Currency Data**: Located in `wwwroot/js/exchange-calculator.js`
+- **Calculation Logic**: Implemented in `Controllers/ApiController.cs`
+- **Form Validation**: Client-side JavaScript validation
+- **UI Styling**: Custom CSS in `wwwroot/css/site.css`
 
 ### Adding New API Endpoints
 1. Add new methods to `Controllers/ApiController.cs`
-2. Create corresponding TanStack Query hooks in `ClientApp/src/hooks/`
-3. Use the hooks in React components
+2. Update JavaScript to call the new endpoints
+3. Add proper request/response models
 
-### Adding New Routes
-1. Create new files in `ClientApp/src/routes/`
-2. Routes are automatically generated by TanStack Router
-3. Use TypeScript for full type safety
+### Adding New Pages
+1. Create new controller actions in `Controllers/HomeController.cs`
+2. Add corresponding Razor views in `Views/Home/`
+3. Update routing as needed
 
 ### Styling
-- Use Tailwind CSS utility classes
-- Custom styles go in `ClientApp/src/global.css`
-- shadcn/ui components for consistent design
-- Component-specific styles can be added inline or as separate CSS modules
+- Edit `wwwroot/css/site.css` for global styles
+- Use CSS custom properties for theming
+- Follow responsive design patterns
+- Maintain accessibility standards
 
-### Code Quality
-- **Formatting**: Run `bun run format` to format code with Biome
-- **Linting**: Run `bun run lint` to check for issues
-- **Git Hooks**: Husky automatically formats and lints on commit
-- **Type Checking**: Run `bun run type-check` for TypeScript validation
+### JavaScript Enhancement
+- Keep functionality progressive (works without JS)
+- Use modern JavaScript features (ES6+)
+- Handle errors gracefully
+- Provide user feedback for async operations
 
 ## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Test both frontend and backend
+4. Test the application thoroughly
 5. Submit a pull request
 
 ## 📄 License
@@ -386,6 +295,6 @@ The application is designed for easy deployment:
 ## 🆘 Support
 
 For questions or issues:
-1. Check the frontend documentation in `ClientApp/README.md`
-2. Review the API documentation
+1. Review the API documentation above
+2. Check the source code documentation
 3. Create an issue in the repository

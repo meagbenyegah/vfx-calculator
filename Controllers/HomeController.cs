@@ -15,8 +15,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        // Serve the React SPA
-        return PhysicalFile(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "dist", "index.html"), "text/html");
+        return View();
     }
 
     public IActionResult Privacy()

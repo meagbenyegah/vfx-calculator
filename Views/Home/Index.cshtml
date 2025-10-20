@@ -1,41 +1,160 @@
 ﻿@{
-    ViewData["Title"] = "VISA FX Calculator";
+    ViewData["Title"] = "Exchange Rate Calculator";
+    Layout = null;
 }
 
-<div class="container mt-5">
-    <div class="text-center mb-4">
-        <img src="~/images/visa.svg" alt="Visa Logo" class="mb-3" />
-        <h1>VISA FX Calculator</h1>
-        <p>Calculate foreign exchange rates for your Visa transactions. Enter the amount in USD and select your target currency to see the converted amount.</p>
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
 
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <form id="fxCalculatorForm">
-                <div class="mb-3">
-                    <label for="usdAmount" class="form-label">USD Amount</label>
-                    <input type="number" class="form-control" id="usdAmount" placeholder="Enter amount in USD" step="0.01" min="0" required />
+<main class="fx-calculator-main">
+    <div class="fx-background"></div>
+    <div class="fx-content">
+        <section class="fx-calculator-card">
+            <!-- Header -->
+            <div class="fx-header">
+                <img src="~/images/logo.svg" alt="Access Bank (Ghana) PLC" class="fx-logo" />
+                <h1 class="fx-title">Exchange Rate Calculator</h1>
+                <p class="fx-description">
+                    Use the converter below to get an indication of the rate you may receive when using your Visa card to pay while traveling internationally.
+                </p>
+            </div>
+
+            <!-- Form -->
+            <form id="fxCalculatorForm" class="fx-form">
+                <!-- Amount Input -->
+                <div class="fx-form-group">
+                    <div class="fx-label-row">
+                        <label for="amount" class="fx-label">Amount you paid</label>
+                        <div class="fx-info-popover" data-title="AMOUNT YOU PAID" data-content="Enter the transaction amount in the original currency. This should be the amount you actually paid or will pay for your purchase.">
+                            <span class="fx-info-icon">ℹ</span>
+                        </div>
+                    </div>
+                    <input type="number" id="amount" name="amount" step="0.01" min="0" placeholder="0.00" class="fx-input" required />
+                    <div class="fx-error" id="amount-error"></div>
                 </div>
 
-                <div class="mb-3">
-                    <label for="currency" class="form-label">Target Currency</label>
-                    <select class="form-select" id="currency" required>
-                        <option value="">Select currency...</option>
-                        <option value="GHS">GHS - Ghanaian Cedi</option>
-                        <option value="EUR">EUR - Euro</option>
-                        <option value="GBP">GBP - British Pound</option>
-                    </select>
+                <!-- Currency Selection -->
+                <div class="fx-form-group">
+                    <div class="fx-label-row">
+                        <label class="fx-label">Currencies to exchange</label>
+                        <div class="fx-info-popover" data-title="CURRENCIES TO EXCHANGE" data-content="Select the currency of the transaction and then the currency for conversion. Use the swap button to quickly exchange the From and To currencies.">
+                            <span class="fx-info-icon">ℹ</span>
+                        </div>
+                    </div>
+
+                    <div class="fx-currency-row">
+                        <div class="fx-currency-select">
+                            <select id="fromCurrency" name="fromCurrency" class="fx-select" required>
+                                <option value="">From</option>
+                            </select>
+                            <div class="fx-error" id="fromCurrency-error"></div>
+                        </div>
+
+                        <button type="button" id="swapCurrencies" class="fx-swap-btn">
+                            <svg class="fx-swap-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                            </svg>
+                        </button>
+
+                        <div class="fx-currency-select">
+                            <select id="toCurrency" name="toCurrency" class="fx-select" required>
+                                <option value="">To</option>
+                            </select>
+                            <div class="fx-error" id="toCurrency-error"></div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-primary">Calculate</button>
+                <!-- Date and Bank Fee Display/Edit -->
+                <div class="fx-form-group">
+                    <div id="dateAndFeeDisplay" class="fx-fee-display">
+                        <span class="fx-fee-text">
+                            Date <strong id="displayDate">10/20/2025</strong>, Bank fee (%) <strong id="displayFee">2</strong>%
+                        </span>
+                        <button type="button" id="editDateAndFee" class="fx-edit-btn">Edit</button>
+                    </div>
+
+                    <div id="dateAndFeeEdit" class="fx-fee-edit" style="display: none;">
+                        <!-- Transaction Date Input -->
+                        <div class="fx-form-group">
+                            <div class="fx-label-row">
+                                <label for="transactionDate" class="fx-label">Transaction date (MM/DD/YYYY)</label>
+                                <div class="fx-info-popover" data-title="TRANSACTION DATE" data-content="Enter a transaction date in the last 12 months. This helps determine the exchange rate that would have been applied at that time.">
+                                    <span class="fx-info-icon">ℹ</span>
+                                </div>
+                            </div>
+                            <div class="fx-date-input-row">
+                                <input type="text" id="transactionDate" name="transactionDate" placeholder="MM/DD/YYYY" class="fx-input" value="10/20/2025" required />
+                                <button type="button" class="fx-calendar-btn">
+                                    <svg class="fx-calendar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="fx-error" id="transactionDate-error"></div>
+                        </div>
+
+                        <!-- Bank Fee Input -->
+                        <div class="fx-form-group">
+                            <div class="fx-label-row">
+                                <label for="bankFee" class="fx-label">Bank fee (%)</label>
+                                <div class="fx-info-popover" data-title="BANK FEE" data-content="Processing fee charged by your bank or financial institution. 2% is an average bank rate, but fees vary so check with your bank for their bank fee rate.">
+                                    <span class="fx-info-icon">ℹ</span>
+                                </div>
+                            </div>
+                            <div class="fx-fee-input-row">
+                                <input type="number" id="bankFee" name="bankFee" step="0.01" min="0" max="100" class="fx-input" value="2" required />
+                                <span class="fx-percent-sign">%</span>
+                            </div>
+                            <div class="fx-error" id="bankFee-error"></div>
+                        </div>
+
+                        <!-- Save Button -->
+                        <div class="fx-save-row">
+                            <button type="button" id="saveDateAndFee" class="fx-save-btn">Save</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="fx-action-buttons">
+                    <button type="submit" id="calculateBtn" class="fx-calculate-btn">
+                        <span id="calculateText">Calculate Conversion</span>
+                        <span id="calculatingText" style="display: none;">Calculating...</span>
+                    </button>
+                    <button type="button" id="resetBtn" class="fx-reset-btn">Reset</button>
                 </div>
             </form>
 
-            <div id="result" class="mt-4 alert alert-info" style="display: none;">
-                <h5>Result:</h5>
-                <p id="resultText"></p>
+            <!-- Results -->
+            <div id="resultsSection" class="fx-results" style="display: none;">
+                <div class="fx-results-content">
+                    <h3 id="exchangeRateDisplay" class="fx-rate-display"></h3>
+                    <p id="markupDisplay" class="fx-markup-display"></p>
+                    <div class="fx-rate-details">
+                        <p id="rateDetail1" class="fx-rate-detail"></p>
+                        <p id="rateDetail2" class="fx-rate-detail"></p>
+                    </div>
+                </div>
             </div>
-        </div>
+
+            <!-- Disclaimer -->
+            <div class="fx-disclaimer">
+                <p>
+                    As of April 2021, VisaNet introduced an enhancement to currency conversion by applying the foreign exchange rate available at the time of the authorization for purposes of clearing and settlement. If for any reason, Visa is not able to use the exchange rate from authorization for currency conversion, Visa will apply the exchange rate available at the time of the processing of the transaction. Your bank may or may not use the rate indicated by this calculator to bill you and may impose additional fees for foreign transactions. If your transaction is converted by the merchant or ATM operator, the exchange rate indicated by this calculator will not apply.
+                </p>
+            </div>
+        </section>
     </div>
-</div>
+</main>
+
+<script src="~/js/exchange-calculator.js" asp-append-version="true"></script>
+</body>
+</html>

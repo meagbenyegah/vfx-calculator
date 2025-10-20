@@ -20,12 +20,8 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-// Serve React SPA files
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
-// SPA fallback - serve index.html for client-side routes
-app.MapFallbackToFile("index.html");
 
 app.Run();
