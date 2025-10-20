@@ -2,7 +2,7 @@
     ViewData["Title"] = "Exchange Rate Calculator";
 }
 
-<div class="container mt-5">
+<div class="container mt-5" id="app" v-cloak>
     <div class="text-center mb-4">
         <img src="~/images/access_logo.png" alt="Access Logo" class="mb-3" style="max-height: 40px" />
         <h1>Exchange Rate Calculator</h1>
@@ -51,3 +51,7 @@
         </div>
     </div>
 </div>
+
+@section scripts {
+    <script src="~/js/index.js?v=1.0"></script>
+}
