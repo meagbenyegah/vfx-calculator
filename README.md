@@ -14,7 +14,7 @@ This project uses a traditional MVC architecture:
 
 ### Backend
 - **ASP.NET Core 8.0** - MVC framework with Web API
-- **C#** - Primary programming language  
+- **C#** - Primary programming language
 - **Razor Pages** - Server-side templating
 - **Controllers** - MVC controllers and API endpoints
 
@@ -155,7 +155,7 @@ The application features a comprehensive Exchange Rate Calculator with the follo
 The backend provides the following API endpoints:
 
 - `GET /api/api` - Basic API information
-- `GET /api/api/health` - Health check endpoint  
+- `GET /api/api/health` - Health check endpoint
 - `POST /api/api/calculate-exchange-rate` - Exchange rate calculation
 
 ### Example API Responses
@@ -172,7 +172,7 @@ The backend provides the following API endpoints:
 ```json
 {
   "fromAmount": 100,
-  "fromCurrency": "USD", 
+  "fromCurrency": "USD",
   "toCurrency": "GHS",
   "baseRate": 12.50,
   "finalRate": 12.8125,
