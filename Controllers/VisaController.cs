@@ -40,15 +40,17 @@ namespace VfxCalculator.Controllers
         {
             request.AcquirerDetails = new AcquirerDetails
             {
-                Bin = 408999,
+                Bin = _appConfig.VisaExchangeRateApi.AcquirerDetails.Bin,
                 Settlement = new Settlement
                 {
-                    CurrencyCode = request.SourceCurrencyCode
-                }
+                    CurrencyCode = _appConfig.VisaExchangeRateApi.AcquirerDetails.Settlement.CurrencyCode
+				}
             };
             request.RateProductCode = "A";
             request.MarkupRate = "1";
             var result = await _visaFXService.GetFxRate(request);
+            if (!result.ResponseCode.Equals("00"))
+                result.ResponseMessage = "An error occurred while processing request";
             return Ok(result);
         }
 
