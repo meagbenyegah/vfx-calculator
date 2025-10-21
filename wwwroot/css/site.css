@@ -18,5 +18,43 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+  /*margin-bottom: 60px;*/
 }
+
+.card {
+    background: #fff;
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    border: none;
+}
+
+.form-control-lg, .btn-lg {
+    border-radius: 0.75rem;
+    font-size: 1.15rem;
+    padding: 0.75rem 1rem;
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.btn-primary {
+    background: #258cfb;
+    border: none;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+.btn-primary:hover, .btn-primary:focus {
+    background: #1769aa;
+}
+
+.btn-outline-secondary {
+    border-radius: 0.75rem;
+}
+
+.alert {
+    border-radius: 0.75rem;
+    font-size: 1.1rem;
+}
+
