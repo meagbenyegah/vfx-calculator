@@ -4,7 +4,7 @@
 
 .hero-background {
    
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75)), url(../../images/imagewoman.jpg);
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75)), url(../../images/1.jpg);
 
     background-position: center;
     background-size: cover;
@@ -31,3 +31,38 @@
     z-index: 1;
 }
 
+input{
+    border-radius: 0.7rem!important;
+}
+
+select {
+    border-radius: 0.7rem !important;
+}
+
+button {
+    border-radius: 0.7rem !important;
+}
+
+.exchange-button {
+    color: #fff;
+}
+
+    .exchange-button:hover {
+        border: 1px solid #fff;
+        color: #fff;
+    }
+
+/* app.css */
+
+/* Base style - white input */
+/* app.css */
+
+/* Base glossy white input */
+.glossy-input {
+    
+}
+
+    .glossy-input:focus {
+        box-shadow: none;
+        border-color: #3d3d3d;
+    }

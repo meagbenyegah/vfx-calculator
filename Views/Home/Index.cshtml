@@ -7,25 +7,26 @@
 
     <div class="container-fluid z-index-1">
         <div class="row">
-            <div class="col-6 text-white p-4">
+            <div class="col-lg-6 text-white p-4">
 
                 <div class="mt-5 ms-0 ps-0" id="app" v-cloak>
-                    <div class="mb-4">
-                        <img src="~/images/access_logo.png" alt="Access Logo" class="mb-3" style="max-height: 40px" />
-                        <h1 class="access-blueblack">Exchange Rate Calculator</h1>
-                        <p class="ombre-orange-text">Flip currencies like a pro! See your Card’s rate in a tap</p>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-7">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+
+                            <div class="mb-4">
+                                <img src="~/images/access_logo.png" alt="Access Logo" class="mb-3" style="max-height: 40px; filter: brightness(0) invert(1); opacity: 0.8" />
+                                <h1 class="text-white">Exchange Rate Calculator</h1>
+                                <p class="text-white">Flip currencies like a pro! See your Card’s rate in a tap</p>
+                            </div>
                             <div class="glassy-bg">
                                 <form id="fxCalculatorForm">
                                     <div class="mb-3">
                                         <label for="amount" class="form-label">Amount</label>
                                         <input type="number"
-                                               class="form-control"
+                                               class="form-control glossy-input"
                                                id="amount"
                                                v-model="amount"
-                                               placeholder="Enter amount"
+                                               placeholder="0.00"
                                                step="0.01"
                                                min="0"
                                                required
@@ -34,17 +35,17 @@
 
                                     <div class="row mb-3 align-items-end">
                                         <div class="col">
-                                            <label for="fromCurrency" class="form-label">From Currency</label>
-                                            <select class="form-select" id="fromCurrency" v-model="fromCurrencyCode" required :disabled="loading">
-                                                <option value="">Select currency</option>
+                                            <label for="fromCurrency" class="form-label">From</label>
+                                            <select class="form-select glossy-input" id="fromCurrency" v-model="fromCurrencyCode" required :disabled="loading">
+                                                <option value="">Select</option>
                                                 <option v-for="currency in currencies" :key="currency.code" :value="currency.code">
                                                     {{ currency.shortName }} - {{ currency.name }}
                                                 </option>
                                             </select>
                                         </div>
-                                        <div class="col-auto d-flex align-items-end">
+                                        <div class="col-auto ps-0 pe-0 d-flex align-items-end">
                                             <button type="button"
-                                                    class="btn btn-ombre-orange"
+                                                    class="btn exchange-button"
                                                     v-on:click.prevent="switchCurrencies"
                                                     :disabled="!fromCurrencyCode || !toCurrencyCode || loading"
                                                     style="margin-bottom:2px;">
@@ -52,9 +53,9 @@
                                             </button>
                                         </div>
                                         <div class="col">
-                                            <label for="toCurrency" class="form-label">To Currency</label>
-                                            <select class="form-select" id="toCurrency" v-model="toCurrencyCode" required :disabled="loading">
-                                                <option value="">Select currency</option>
+                                            <label for="toCurrency" class="form-label">To</label>
+                                            <select class="form-select glossy-input" id="toCurrency" v-model="toCurrencyCode" required :disabled="loading">
+                                                <option value="">Select</option>
                                                 <option v-for="currency in currencies" :key="currency.code" :value="currency.code">
                                                     {{ currency.shortName }} - {{ currency.name }}
                                                 </option>
@@ -85,8 +86,8 @@
                                 </div>
 
                                 <div v-if="fxResult !== null && fromCurrency && toCurrency"
-                                     class="mt-4 p-3 pt-4 rounded text-center"
-                                     style="background-color: #f0f0f0;">
+                                     class="mt-4 p-3 pt-4 text-center"
+                                     style="background-color: #f0f0f0; border-radius: 1rem;">
                                     <strong class="h5 text-black">{{ sourceAmount }} {{ sourceCurrencyName }} = {{ fxResult.destinationAmount }} {{ destinationCurrencyName }}</strong>
                                     <p class="text-black">1 {{ sourceCurrencyName }} = {{ fxResult.conversionRate }} {{ destinationCurrencyName }}</p>
                                 </div>
@@ -96,7 +97,7 @@
 
 
                 </div>
-                <div class="col-6 text-white p-4">
+                <div class="col-lg-6 text-white p-4">
                 </div>
             </div>
         </div>

@@ -60,13 +60,13 @@ body {
 
 .glassy-bg {
     background: rgba(255, 255, 255, 0.18);
-    border-radius: 1.5rem;
+    border-radius: 1.0rem;
     box-shadow: 0 4px 24px rgba(0,0,0,0.10);
     border: 1px solid rgba(255,255,255,0.3);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     padding: 2rem;
-    min-width: 350px;
+    /*min-width: 350px;*/
     width: 100%;
     max-width: 1000px; /* or remove for full width */
 }
@@ -81,7 +81,7 @@ body {
     color: #262262 !important;
 }
 
-.btn-ombre-orange {
+/*.btn-ombre-orange {
     background: linear-gradient(90deg, #b0b0b0 0%, #F58220 100%);
     color: #fff !important;
     border: none;
@@ -101,6 +101,5 @@ body {
     background-clip: text;
     color: transparent;
     font-weight: 600;
-}
-
+}*/
 
